@@ -2,12 +2,12 @@ captcha = '892195969991735837915273868729548694237967495115412399373194562526947
 
 def evaluateCaptcha(value):
     total = 0
-    for i in range(len(value)):
-        #check to see if it's circular
-        if value[i] == value[i-1]:
-            total = total + int(value[i])
-        else:
-            continue
+    step = len(captcha)/2
+    for i in range(len(value)/2):
+        if value[i] == value[i + step]:
+            total = total + (int(value[i])*2)
+    
+    print(total)
 
 if __name__ == "__main__":
     evaluateCaptcha(captcha)
