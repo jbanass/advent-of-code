@@ -23,19 +23,19 @@ class OpCode
   def self.find_noun_and_verb_to_match(match)
     noun, verb = 0
     result = nil
-    instructions = self.reset_instructions(noun, verb)
+    instructions = reset_instructions(noun, verb)
 
     while noun <= 99
       verb = 0
-      instructions = self.reset_instructions(noun, verb)
+      instructions = reset_instructions(noun, verb)
       while verb <= 99
-        result = self.calculate(instructions)[0]
+        result = calculate(instructions)[0]
 
         if result == match
           return noun, verb
         else
           verb += 1
-          instructions = self.reset_instructions(noun, verb)
+          instructions = reset_instructions(noun, verb)
         end
       end
       noun += 1
