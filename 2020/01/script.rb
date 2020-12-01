@@ -1,15 +1,19 @@
 class DayOne
-  input = %i(
-    
-  )
 
-  def self.calculate(numbers)
-    index_a = nil
-    index_b = nil
-
+  def self.calculate_two(numbers)
     numbers.each do |i|
       numbers.each do |j|
         return i*j if i + j == 2020
+      end
+    end
+  end
+
+  def self.calculate_three(numbers)
+    numbers.each do |i|
+      numbers.each do |j|
+        numbers.each do |k|
+          return i*j*k if i + j + k == 2020
+        end
       end
     end
   end
@@ -218,4 +222,5 @@ input = [
   1322
 ]
 
-puts DayOne.calculate(input)
+puts DayOne.calculate_two(input)
+puts DayOne.calculate_three(input)
