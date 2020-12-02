@@ -2,14 +2,24 @@ require 'pry'
 
 class DayTwo
   def self.calculate(inputs)
+    offset = 1
     results = Hash.new { |h,k| h[k] = false }
 
     inputs.map { |input| self.parse(input) }.each_with_index do |input, index|
-      range = input[0]
+      ranges = input[0]
       letter = input[1]
       phrase = input[2]
 
-      results[inputs[index]] = range.include?(phrase.count(letter))
+      position_1_has_letter = phrase[ranges[0] - offset] == letter
+      position_2_has_letter = phrase[ranges[1] - offset] == letter
+      
+      results[inputs[index]] = if position_1_has_letter && position_2_has_letter
+        false
+      elsif (position_1_has_letter && !position_2_has_letter) || (!position_1_has_letter && position_2_has_letter)
+        true
+      else
+        false
+      end
     end
 
     results
@@ -22,7 +32,7 @@ class DayTwo
     phrase = split[2]
 
     [
-      (range[0].to_i..range[1].to_i),
+      [range[0].to_i, range[1].to_i],
       letter_to_search,
       phrase
     ]

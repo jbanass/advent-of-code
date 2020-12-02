@@ -5,7 +5,7 @@ describe DayTwo do
     it "returns a parsed array consisting of range, which letter, and the string to check" do
       input = "2-9 c: ccccccccc"
 
-      expect(described_class.parse(input)).to eq([(2..9), 'c', 'ccccccccc'])
+      expect(described_class.parse(input)).to eq([[2,9], 'c', 'ccccccccc'])
 
     end
   end
@@ -21,7 +21,7 @@ describe DayTwo do
       expected = {
         "1-3 a: abcde" => true,
         "1-3 b: cdefg" => false,
-        "2-9 c: ccccccccc" => true
+        "2-9 c: ccccccccc" => false
       }
 
       result = described_class.calculate(input)
