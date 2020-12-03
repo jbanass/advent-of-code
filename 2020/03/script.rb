@@ -1,15 +1,13 @@
 require 'pry'
 
 class DayThree
-  RIGHT = 3.freeze
-  DOWN = 1.freeze
   OPEN_SQUARE = '.'.freeze
   TREE = '#'.freeze
   STARTING_POSITION_X = 0
   STARTING_POSITION_Y = 0
 
 
-  def self.calculate(input)
+  def self.calculate(input, right, down)
     cur_position_x = STARTING_POSITION_X
     cur_position_y = STARTING_POSITION_Y
     y_length = input.length - 1
@@ -20,29 +18,30 @@ class DayThree
 
     (y_length).times do
       prev_count = tree_count
-      RIGHT.times do |i|
-        puts "Currently at #{cur_position_x},#{cur_position_y}"
+      right.times do |i|
+        #puts "Currently at #{cur_position_x},#{cur_position_y}"
         cur_position_x += 1
-        puts "Moved to #{cur_position_x},#{cur_position_y}"
+        #puts "Moved to #{cur_position_x},#{cur_position_y}"
         print_map(input, cur_position_x, cur_position_y)
-        # if input[cur_position_y][cur_position_x] == TREE
-        #   puts "Hit tree at new location!"
-        #   tree_count += 1
-        # end
       end
 
-      DOWN.times do |i|
-        puts "Currently at #{cur_position_x},#{cur_position_y}"
+      down.times do |i|
+        #puts "Currently at #{cur_position_x},#{cur_position_y}"
         cur_position_y += 1
-        puts "Moved to #{cur_position_x},#{cur_position_y}"
+        #puts "Moved to #{cur_position_x},#{cur_position_y}"
         print_map(input, cur_position_x, cur_position_y)
+      end
+
+      begin
         if input[cur_position_y][cur_position_x] == TREE
-          puts "Hit tree at new location!"
+          #puts "Hit tree at new location!"
           tree_count += 1 
         end
+      rescue Exception => e
+        # noop
       end
 
-      puts "Encountered #{ tree_count - prev_count } new trees en route to #{cur_position_x},#{cur_position_y}. Total: #{ tree_count }"
+      #puts "Encountered #{ tree_count - prev_count } new trees en route to #{cur_position_x},#{cur_position_y}. Total: #{ tree_count }"
     end
 
     tree_count
@@ -397,4 +396,21 @@ input = %w(
   .....#....#..#.#...##.#.#.....#
 )
 
-puts DayThree.calculate(input)
+# puts "Part 1: #{DayThree.calculate(input, 3, 1)}"
+
+#part 2
+slopes = [
+  [3,1],
+  [5,1],
+  [7,1],
+  [1,2]
+]
+
+part_2_total = DayThree.calculate(input, 1, 1)
+slopes.each do |slope|
+  puts "performing #{slope}"
+  part_2_total *= DayThree.calculate(input, slope[0], slope[1])
+  puts "finished #{slope}"
+end
+
+puts "Part 2: #{part_2_total}"
