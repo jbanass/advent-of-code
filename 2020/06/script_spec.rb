@@ -47,7 +47,7 @@ describe DaySix do
     }
 
     it "correctly sums the answer" do
-      expect(described_class.sum_groups(groups)).to eq(11)
+      expect(described_class.sum_groups(groups)).to eq(6)
     end
   end
 
@@ -55,8 +55,8 @@ describe DaySix do
     let(:groups) {
       [
         [['abc'], 3],
-        [['a','b','c'], 3],
-        [['ab','ac'], 3],
+        [['a','b','c'], 0],
+        [['ab','ac'], 1],
         [['a','a','a','a'], 1],
         [['b'], 1]
       ]

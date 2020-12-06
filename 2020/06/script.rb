@@ -16,7 +16,15 @@ class DaySix
   end
 
   def self.answers_for_group(group)
-    group.join('').split('').to_set.length
+    people_in_group = group.length
+
+    group.
+      join('').
+      split('').
+      group_by(&:chr).
+      map { |k,v| [k, v.size] }.
+      filter { |letter, count| count == people_in_group }.
+      length
   end
 end
 
