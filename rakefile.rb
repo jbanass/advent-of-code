@@ -54,6 +54,10 @@ task :new, [:year,:day] do |task, args|
           input = Parser.split_on_newline('input.txt')
         end
       end
+
+      if __FILE__ == $0
+        puts Day#{days[args[:day]]}.calculate
+      end
     SCRIPT
     )
   end
