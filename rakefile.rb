@@ -51,8 +51,12 @@ task :new, [:year,:day] do |task, args|
       class Day#{days[args[:day]]}
 
         def calculate
-          input = Parser.split_on_newline('input.txt')
+          input = Parser.split_on_newline('/Users/josephbanass/projects/advent-of-code/#{args[:year]}/#{args[:day]}/input.txt')
         end
+      end
+
+      if __FILE__ == $0
+        puts Day#{days[args[:day]]}.calculate
       end
     SCRIPT
     )

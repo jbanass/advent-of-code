@@ -11,7 +11,6 @@ class Parser
   end
 
   def self.read_file(file_path)
-    file_path = File.join(File.expand_path(File.dirname(__FILE__)), file_path)
     File.open(file_path).read
   end
 
