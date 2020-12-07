@@ -1,8 +1,9 @@
 require 'pry'
+require_relative '../../tools/parser/parser.rb'
 
 class DayFive
 
-  def self.calculate(inputs)
+  def self.calculate
     inputs.map { |input| calculate_seat_id(input.strip) }.max
   end
 
@@ -10,7 +11,7 @@ class DayFive
     (solve_row(input) * 8) + solve_column(input)
   end
 
-  def self.find_my_id(inputs)
+  def self.find_my_id
     sorted_array = inputs.map { |input| calculate_seat_id(input.strip) }.sort
 
     ((0..1024).to_a - sorted_array).filter do |seat|
@@ -50,9 +51,13 @@ class DayFive
 
     input.split('').last == 'R' ? low : high
   end
+
+  def self.inputs
+    Parser.split_on_newline('/Users/josephbanass/projects/advent-of-code/2020/05/input.txt')
+  end
 end
 
-inputs = File.open('./input.txt').readlines
-
-puts DayFive.calculate(inputs)
-puts DayFive.find_my_id(inputs)
+if __FILE__ == $0
+  puts DayFive.calculate
+  puts DayFive.find_my_id
+end
