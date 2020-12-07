@@ -58,40 +58,56 @@ describe DaySeven do
     }
 
     it "returns the rulebook" do
-      #allow(Parser).to receive(:split_on_newline).and_return(input)
       expect(subject.rulebook).to eq(expected)
     end
   end
 
   describe "drilldown" do
     it "correctly determines if bag can hold a gold bag" do
-      #allow(Parser).to receive(:split_on_newline).and_return(input)
       expect(subject.drilldown("bright white bags")).to eq(true)
     end
 
     it "correctly determines if bag can hold a gold bag" do
-      #allow(Parser).to receive(:split_on_newline).and_return(input)
       expect(subject.drilldown("muted yellow bags")).to eq(true)
     end
 
     it "correctly determines if bag can hold a gold bag (recursion)" do
-      #allow(Parser).to receive(:split_on_newline).and_return(input)
       expect(subject.drilldown("dark orange bags")).to eq(true)
     end
 
     it "correctly determines if bag can hold a gold bag (recursion)" do
-      #allow(Parser).to receive(:split_on_newline).and_return(input)
       expect(subject.drilldown("light red bags")).to eq(true)
     end
 
     it "correctly determines if bag can hold a gold bag (recursion)" do
-      #allow(Parser).to receive(:split_on_newline).and_return(input)
       expect(subject.drilldown("vibrant plum bags")).to eq(false)
     end
 
     it "correctly determines if bag can hold a gold bag" do
-      #allow(Parser).to receive(:split_on_newline).and_return(input)
       expect(subject.drilldown("faded blue bags")).to eq(false)
+    end
+  end
+
+  describe "drilldown_bag_count" do
+    it "gets number of bags in a bag" do
+      expect(subject.drilldown_bag_count('shiny gold bags')).to eq(32)
+    end
+
+    context "deeper example" do
+      let(:input) {
+        [
+          'shiny gold bags contain 2 dark red bags.',
+          'dark red bags contain 2 dark orange bags.',
+          'dark orange bags contain 2 dark yellow bags.',
+          'dark yellow bags contain 2 dark green bags.',
+          'dark green bags contain 2 dark blue bags.',
+          'dark blue bags contain 2 dark violet bags.',
+          'dark violet bags contain no other bags.',
+        ]
+      }
+      it "handles it fine" do
+        expect(subject.drilldown_bag_count('shiny gold bags')).to eq(126)
+      end
     end
   end
 

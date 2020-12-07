@@ -10,8 +10,11 @@ class DaySeven
   end
 
   def calculate
-    ctr = 0
-    rulebook.map { |container, contents| puts "ctr at #{ctr}";ctr+=1;drilldown(container) }.count(true) - 1
+    rulebook.map { |container, contents| drilldown(container) }.count(true) - 1
+  end
+
+  def calculate_part_two
+    drilldown_bag_count('shiny gold bags')
   end
 
   def drilldown(container)
@@ -22,6 +25,14 @@ class DaySeven
     end
     
     @encountered[container] = @rulebook[container].map { |content| self.drilldown(content[1]) }.include?(true)
+  end
+
+  def drilldown_bag_count(container)
+    return 0 if @rulebook[container].nil?
+
+    count = @rulebook[container].map { |content| content[0] }.sum
+
+    return count + @rulebook[container].map { |content| content[0] * self.drilldown_bag_count(content[1]) }.sum
   end
 
   def set_rulebook
@@ -65,4 +76,5 @@ end
 
 if __FILE__ == $0
   puts DaySeven.new.calculate
+  puts DaySeven.new.calculate_part_two
 end
