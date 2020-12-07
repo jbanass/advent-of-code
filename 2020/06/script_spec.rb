@@ -1,39 +1,6 @@
 require_relative 'script.rb'
 
 describe DaySix do
-  describe "convert_input_to_groups" do
-    let(:input) {
-      <<~STRING
-        abc
-
-        a
-        b
-        c
-
-        ab
-        ac
-
-        a
-        a
-        a
-        a
-
-        b
-      STRING
-    }
-
-    it "correctly returns groups" do
-      groups = described_class.convert_input_to_groups(input)
-      expect(groups.length).to eq(5)
-      expect(groups).to eq([
-        ['abc'],
-        ['a','b','c'],
-        ['ab','ac'],
-        ['a','a','a','a'],
-        ['b']
-      ])
-    end
-  end
 
   describe "sum_groups" do
     let(:groups) {
