@@ -1,7 +1,8 @@
 require 'pry'
+require_relative '../../tools/parser/parser.rb'
 
 class DayTwo
-  def self.calculate(inputs)
+  def self.calculate
     offset = 1
     results = Hash.new { |h,k| h[k] = false }
 
@@ -37,10 +38,14 @@ class DayTwo
       phrase
     ]
   end
+
+  def self.inputs
+    Parser.split_on_newline('/Users/josephbanass/projects/advent-of-code/2020/02/input.txt')
+  end
 end
 
-inputs = File.open('/Users/josephbanass/Desktop/input.txt').readlines.map { |line| line.chomp }
+if __FILE__ == $0
+  results = DayTwo.calculate
 
-results = DayTwo.calculate(inputs)
-
-puts results.select { |key, value| value == true }.length
+  puts results.select { |key, value| value == true }.length
+end

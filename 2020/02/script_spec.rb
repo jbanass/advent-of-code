@@ -12,11 +12,13 @@ describe DayTwo do
 
   describe "calculate" do
     it "successfully calculates" do
-      input = [
-        "1-3 a: abcde",
-        "1-3 b: cdefg",
-        "2-9 c: ccccccccc"
-      ]
+      allow(described_class).to receive(:inputs).and_return(
+        [
+          "1-3 a: abcde",
+          "1-3 b: cdefg",
+          "2-9 c: ccccccccc"
+        ]
+      )
 
       expected = {
         "1-3 a: abcde" => true,
@@ -24,7 +26,7 @@ describe DayTwo do
         "2-9 c: ccccccccc" => false
       }
 
-      result = described_class.calculate(input)
+      result = described_class.calculate
 
       expect(result).to eq(expected)
       expect(result.length).to eq(expected.length)
