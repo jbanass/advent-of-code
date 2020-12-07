@@ -40,6 +40,7 @@ task :new, [:year,:day] do |task, args|
 
   script_path = File.join(day_path, "script.rb")
   spec_path = File.join(day_path, "script_spec.rb")
+  input_path = File.join(day_path, "input.txt")
 
   FileUtils.mkdir_p(day_path)
   File.open(script_path, 'wb') do |file|
@@ -49,8 +50,8 @@ task :new, [:year,:day] do |task, args|
 
       class Day#{days[args[:day]]}
 
-        def calculate(file_path)
-          input = Parser.split_on_newline(file_path)
+        def calculate
+          input = Parser.split_on_newline('input.txt')
         end
       end
     SCRIPT
@@ -67,6 +68,8 @@ task :new, [:year,:day] do |task, args|
     SCRIPT
     )
   end
+
+  FileUtils.touch(input_path)
 
   puts "Ready to go!"
 end
