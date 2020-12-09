@@ -93,5 +93,5 @@ end
 if __FILE__ == $0
   #puts DayEight.new.calculate
   part_2 = DayEight.new
-  puts part_2.fix_bad_instruction
+  part_2.fix_bad_instruction
 end
