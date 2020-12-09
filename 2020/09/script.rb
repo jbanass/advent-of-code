@@ -19,6 +19,25 @@ class DayNine
     end
   end
 
+  def calculate_part_two(target_number)
+    start = 0
+    finish = 0
+    
+    while true
+      sum = input[start..finish].sum
+      if sum < target_number
+        finish += 1
+      elsif sum == target_number
+        min = input[start..finish].min
+        max = input[start..finish].max
+        return min + max
+      else
+        start += 1
+        finish = start
+      end
+    end
+  end
+
   def valid_number_range
     range = Hash.new { |h, k| h[k] = false }
     input[@pointer - @preamble - 1..@pointer - 1].each { |number| range[number] = true }
@@ -32,4 +51,5 @@ end
 
 if __FILE__ == $0
   puts DayNine.new.calculate
+  puts DayNine.new.calculate_part_two(400480901)
 end
