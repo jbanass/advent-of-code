@@ -9,10 +9,10 @@ class DayEight
     @encountered_operations = Hash.new { |h, k| h[k] = false }
   end
 
-  def calculate
-    while true
+  def calculate(input=default_input())
+    while @stack_pointer < input.length
       if @encountered_operations[@stack_pointer]
-        break
+        raise InfiniteLoopException.new @accumulator
       else
         @encountered_operations[@stack_pointer] = true
       end
@@ -37,7 +37,7 @@ class DayEight
       @accumulator = @accumulator.send(operator, value)
       set_stack_pointer_position(@stack_pointer + 1)
     when :jmp
-      @stack_pointer = @stack_pointer.send(operator, value)
+      set_stack_pointer_position(@stack_pointer.send(operator, value))
     when :nop
       # noop
       set_stack_pointer_position(@stack_pointer + 1)
@@ -60,11 +60,38 @@ class DayEight
     @accumulator
   end
 
-  def input
+  def default_input
     Parser.split_on_newline('/Users/josephbanass/projects/advent-of-code/2020/08/input.txt')
   end
+
+  def fix_bad_instruction
+    default_input.each_with_index do |operation, index|
+      new_input = default_input
+      set_accumulator_value(0)
+      set_stack_pointer_position(0)
+      @encountered_operations = Hash.new { |h, k| h[k] = false }
+      begin
+        case operation[0..2]
+        when 'jmp'
+          new_input[index] = 'nop '.concat(operation[4..-1])
+          puts calculate(new_input)
+        when 'nop'
+          new_input[index] = 'jmp '.concat(operation[4..-1])
+          puts calculate(new_input)
+        else
+          next
+        end
+      rescue InfiniteLoopException => e
+        next
+      end
+    end
+  end
+
+  class InfiniteLoopException < Exception; end;
 end
 
 if __FILE__ == $0
-  puts DayEight.new.calculate
+  #puts DayEight.new.calculate
+  part_2 = DayEight.new
+  puts part_2.fix_bad_instruction
 end

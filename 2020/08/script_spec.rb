@@ -20,8 +20,10 @@ describe DayEight do
 
   describe "#calculate" do
     it "properly calculates" do
-      allow(subject).to receive(:input).and_return(input)
-      expect(subject.calculate).to eq(5)
+      allow(subject).to receive(:default_input).and_return(input)
+      expect{ 
+        subject.calculate
+      }.to raise_error(DayEight::InfiniteLoopException, '5')
     end
   end
 
