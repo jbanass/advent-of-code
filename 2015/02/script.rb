@@ -13,6 +13,16 @@ class DayTwo
     total
   end
 
+  def calculate_2
+    total = 0
+    input.each do |measurement|
+      min_1, min_2 = measurement.sort[0..1]
+      total += ((min_1*2) + (min_2*2)) + measurement.reduce { |x, y| x*y }
+    end
+
+    total
+  end
+
   def parse_line(line)
     line.split('x').map { |number| number.to_i }
   end
@@ -32,4 +42,5 @@ end
 
 if __FILE__ == $0
   puts DayTwo.new.calculate
+  puts DayTwo.new.calculate_2
 end
