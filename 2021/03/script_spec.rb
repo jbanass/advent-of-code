@@ -54,6 +54,36 @@ describe DayThree do
     end
   end
 
+  describe "#oxygen_generator_rating_binary" do
+    it "correctly returns the binary" do
+      expect(subject.oxygen_generator_rating_binary).to eq('10111')
+    end
+  end
+
+  describe "#oxygen_generator_rating_decimal" do
+    it "correctly returns the decimal" do
+      expect(subject.oxygen_generator_rating_decimal).to eq(23)
+    end
+  end
+
+  describe "#co2_scrubber_rating_binary" do
+    it "correctly returns the binary" do
+      expect(subject.co2_scrubber_rating_binary).to eq('01010')
+    end
+  end
+
+  describe "#co2_scrubber_rating_decimal" do
+    it "correctly returns the decimal" do
+      expect(subject.co2_scrubber_rating_decimal).to eq(10)
+    end
+  end
+
+  describe "#calculate_2" do
+    it "correctly returns the result" do
+      expect(subject.calculate_2).to eq(230)
+    end
+  end
+
   describe "#get_common_positions" do
     let(:expected) {
       [
