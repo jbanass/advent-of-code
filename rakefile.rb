@@ -36,7 +36,7 @@ task :new, [:year,:day] do |task, args|
     exit
   end
 
-  `git checkout master && git pull && git checkout -b aoc#{args[:year]}-day#{args[:day]}`
+  `git checkout main && git pull && git checkout -b aoc#{args[:year]}-day#{args[:day]}`
 
   script_path = File.join(day_path, "script.rb")
   spec_path = File.join(day_path, "script_spec.rb")
