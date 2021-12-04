@@ -24,6 +24,12 @@ describe DayTwo do
     end
   end
 
+  describe "#calculate_2" do
+    it "correctly reports back the result" do
+      expect(subject.calculate_2).to eq(900)
+    end
+  end
+
   describe "#transformed_input" do
     let(:expected) {
       [

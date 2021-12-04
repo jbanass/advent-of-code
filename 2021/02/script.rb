@@ -21,6 +21,26 @@ class DayTwo
     horizontal * depth
   end
 
+  def calculate_2
+    horizontal = 0
+    depth = 0
+    aim = 0
+
+    transformed_input.each do |orders|
+      case orders[:direction]
+      when :forward
+        horizontal += orders[:units]
+        depth += (aim * orders[:units])
+      when :down
+        aim += orders[:units]
+      when :up
+        aim -= orders[:units]
+      end
+    end
+
+    horizontal * depth
+  end
+
   def transformed_input
     @transformed_input ||= input.map do |movement|
       direction, units = movement.split(' ')
@@ -38,4 +58,5 @@ end
 
 if __FILE__ == $0
   puts DayTwo.new.calculate
+  puts DayTwo.new.calculate_2
 end
