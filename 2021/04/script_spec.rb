@@ -263,7 +263,7 @@ describe DayFour do
 
       it "finds winning bingo board index" do
         allow(subject).to receive(:bingo_boards).and_return(bingo_boards_horizontal_win)
-        expect(subject.find_bingo([1,2])).to eq(1)
+        expect(subject.find_bingo([1,2])).to eq([1])
       end
     end
 
@@ -326,7 +326,7 @@ describe DayFour do
 
       it "finds winning bingo board index" do
         allow(subject).to receive(:bingo_boards).and_return(bingo_boards_vertical_win)
-        expect(subject.find_bingo([1,2])).to eq(1)
+        expect(subject.find_bingo([1,2])).to eq([1])
       end
     end
   end
@@ -396,6 +396,12 @@ describe DayFour do
   describe "#calculate" do
     it 'correctly returns the value' do
       expect(subject.calculate).to eq(4512)
+    end
+  end
+
+  describe "#calculate_2" do
+    it 'correctly returns the value' do
+      expect(subject.calculate_2).to eq(1924)
     end
   end
 

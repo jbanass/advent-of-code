@@ -16,7 +16,32 @@ class DayFour
       end
     end
 
-    current_number * sum_unchecked(winning_board_index)
+    current_number * sum_unchecked(winning_board_index[0])
+  end
+
+  def calculate_2
+    numbers = numbers_to_call
+    winning_indices = []
+    number_of_boards = bingo_boards.length - 1
+    break_on_next_win = false
+    
+    while (!numbers.empty?) do
+      current_number = numbers.shift
+
+      boards_affected = (check_boards(current_number) - winning_indices)
+
+      if (winning_board_indices = find_bingo(boards_affected))
+        break if break_on_next_win
+
+        (winning_indices << (winning_board_indices - winning_indices)).flatten!
+
+        if winning_indices.flatten.uniq.length == number_of_boards
+          break_on_next_win = true
+        end
+      end
+    end
+
+    current_number * sum_unchecked(winning_board_indices[0])
   end
 
   def sum_unchecked(winning_board_index)
@@ -29,25 +54,30 @@ class DayFour
   end
 
   def find_bingo(board_indices)
+    winning_boards = []
     board_indices.each do |board_index|
-      bingo_boards[board_index].each_with_index do |row, row_index|
-        if row.select { |cell| cell[:checked] }.length == 5
-          return board_index
-        end
-
-        begin
-          column = (0..4).map { |column_index| bingo_boards[board_index][column_index][row_index] }
-          
-          if column.select { |cell| cell[:checked] }.length == 5
-            return board_index
+      catch :board_won do
+        bingo_boards[board_index].each_with_index do |row, row_index|
+          if row.select { |cell| cell[:checked] }.length == 5
+            winning_boards << board_index
+            throw :board_won
           end
-        rescue
-          binding.pry
+
+          begin
+            column = (0..4).map { |column_index| bingo_boards[board_index][column_index][row_index] }
+            
+            if column.select { |cell| cell[:checked] }.length == 5
+              winning_boards << board_index
+              throw :board_won
+            end
+          rescue
+            binding.pry
+          end
         end
       end
     end
 
-    nil
+    winning_boards.empty? ? nil : winning_boards
   end
 
   def check_boards(number_called)
@@ -96,4 +126,5 @@ end
 
 if __FILE__ == $0
   puts DayFour.new.calculate
+  puts DayFour.new.calculate_2
 end
