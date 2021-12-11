@@ -62,8 +62,6 @@ class DayFive
         x_operation = x1 > x2 ? :- : :+
         y_operation = y1 > y2 ? :- : :+
 
-        scenario = true if x2 == 0 && y2 == 8
-
         while (x1 != x2 && y1 != y2)
           @hydrothermal_vent_locations[x1][y1] += 1          
           
