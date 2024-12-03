@@ -40,4 +40,12 @@ describe DayTwo do
       end
     end
   end
+
+  describe 'part 2' do
+    describe '#calculate2' do
+      it 'calculates' do
+        expect(subject.calculate2).to eq(4)
+      end
+    end
+  end
 end
