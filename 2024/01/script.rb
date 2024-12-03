@@ -4,7 +4,11 @@ require_relative '../../tools/parser/parser.rb'
 class DayOne
 
   def calculate
-    (0..normalized_input.length).map { |idx| (left[idx].to_i - right[idx].to_i).abs }.sum
+    (0..normalized_input.length - 1).map { |idx| (left[idx] - right[idx]).abs }.sum
+  end
+
+  def calculate2
+    (0..normalized_input.length - 1).map { |idx| left[idx] * right.count(left[idx]) }.sum
   end
 
   private
@@ -28,4 +32,5 @@ end
 
 if __FILE__ == $0
   puts DayOne.new.calculate
+  puts DayOne.new.calculate2
 end

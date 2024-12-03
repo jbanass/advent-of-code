@@ -16,4 +16,10 @@ describe DayOne do
       expect(subject.calculate).to eq(11)
     end
   end
+
+  describe '#calculate2' do
+    it 'calculates' do
+      expect(subject.calculate2).to eq(31)
+    end
+  end
 end
