@@ -3,29 +3,48 @@ require_relative '../../tools/parser/parser.rb'
 
 class DayThree
 
-  def calculate
-    find_instructions.map { |instruction| execute_instruction(instruction) }.sum
+  def initialize
+    @can_process = true
   end
 
-  def execute_instruction(instruction)
-    instruction[1].send(instruction[0], instruction[2])
+  def calculate
+    find_instructions.map { |instruction| instruction.call }.sum
+  end
+
+  def calculate2
+    find_instructions.map { |instruction| instruction.call }.sum
   end
 
   def find_instructions
-    reg = /mul\(\d+,\d+\)/
-    instruction_reg = /(mul)/
-    argument_reg = /\d+/
+    reg = /(mul)(\(\d+,\d+\))|(do\b|\bdon't\b)(\(\))/
 
-    mapping = {
-      'mul' => :*
-    }
+    input.scan(reg).map do |instruction|
+      instruction, args = instruction.compact
 
-    input.scan(reg).map do |token|
-      [
-        mapping[token[instruction_reg]],
-        *token.scan(argument_reg).map(&:to_i)
-      ]
+      case instruction
+      when 'mul'
+        a, b = args.scan(/\d+/).map(&:to_i)
+        Proc.new { multiply(a, b) }
+      when 'do'
+        Proc.new { enable }
+      when "don't"
+        Proc.new { disable }
+      end
     end
+  end
+
+  def multiply(a, b)
+    @can_process ? a * b : 0
+  end
+
+  def disable
+    @can_process = false
+    0
+  end
+
+  def enable
+    @can_process = true
+    0
   end
 
   private
@@ -37,4 +56,5 @@ end
 
 if __FILE__ == $0
   puts DayThree.new.calculate
+  puts DayThree.new.calculate2
 end
