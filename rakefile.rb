@@ -41,6 +41,7 @@ task :new, [:year,:day] do |task, args|
   script_path = File.join(day_path, "script.rb")
   spec_path = File.join(day_path, "script_spec.rb")
   input_path = File.join(day_path, "input.txt")
+  input_fixture_path = File.join(day_path, "input_fixture.txt")
 
   FileUtils.mkdir_p(day_path)
   File.open(script_path, 'wb') do |file|
@@ -51,12 +52,18 @@ task :new, [:year,:day] do |task, args|
       class Day#{days[args[:day]]}
 
         def calculate
-          input = Parser.split_on_newline('/Users/josephbanass/projects/advent-of-code/#{args[:year]}/#{args[:day]}/input.txt')
+          nil
+        end
+
+        private
+
+        def input
+          Parser.split_on_newline('/Users/josephbanass/projects/advent-of-code/#{args[:year]}/#{args[:day]}/input.txt')
         end
       end
 
       if __FILE__ == $0
-        puts Day#{days[args[:day]]}.calculate
+        puts Day#{days[args[:day]]}.new.calculate
       end
     SCRIPT
     )
@@ -64,16 +71,26 @@ task :new, [:year,:day] do |task, args|
 
   File.open(spec_path, 'wb') do |file|
     file.write(<<~SCRIPT
-      require_relative 'script.rb'
+      require_relative 'script.rb'      
 
       describe Day#{days[args[:day]]} do
 
+        subject { described_class.new }
+
+        let(:input) {
+          Parser.split_on_newline('/Users/josephbanass/projects/advent-of-code/#{args[:year]}/#{args[:day]}/input_fixture.txt')
+        }
+
+        before(:each) do
+          allow(subject).to receive(:input).and_return(input)
+        end
       end
     SCRIPT
     )
   end
 
   FileUtils.touch(input_path)
+  FileUtils.touch(input_fixture_path)
 
   puts "Ready to go!"
 end
