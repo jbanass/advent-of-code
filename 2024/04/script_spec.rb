@@ -14,121 +14,134 @@ describe DayFour do
 
   describe '#calculate' do
     it 'calculates' do
-      expect(subject.calculate).to eq(18)
+      expect(subject.calculate).to eq(9)
     end
   end
 
   describe '#get_xmas_coords_from' do
+      # forwards on left means
+      # M
+      #  A
+      #   S
+
+      # forwards on right means
+      #    S
+      #   A
+      #  M
     let(:x) { nil }
     let(:y) { nil }
-    context 'when xmas is backwards' do
-      let(:x) { 4 }
+
+    context 'where left mas is forwards and right mas is forwards' do
+      let(:x) { 2 }
       let(:y) { 1 }
-
-      it 'finds xmas and returns the coords' do
-        expect(subject.get_xmas_coords_from(y, x)).to include([
-          [1, 4],
-          [1, 3],
-          [1, 2],
-          [1, 1]
+      
+      it 'returns the left mas coords then the right mas coords' do
+        expect(subject.get_xmas_coords_from(y, x)).to match_array([
+          [
+            [
+              [0, 1],
+              [1, 2],
+              [2, 3]
+            ],
+            [
+              [2, 1],
+              [1, 2],
+              [0, 3]
+            ]            
+          ]
         ])
       end
     end
 
-    context 'when xmas is forwards' do
-      let(:x) { 5 }
-      let(:y) { 0 }
+    # left
+    # S
+    #  A
+    #   M
 
-      it 'finds xmas and returns the coords' do
-        expect(subject.get_xmas_coords_from(y, x)).to include([
-          [0, 5],
-          [0, 6],
-          [0, 7],
-          [0, 8]
+    # right
+    #   S
+    #  A
+    # M
+    context 'were left mas is backwards and right mas is forwards' do
+      let(:x) { 7 }
+      let(:y) { 2 }
+      
+      it 'returns the left mas coords then the right mas coords' do
+        expect(subject.get_xmas_coords_from(y, x)).to match_array([
+          [
+            [
+              [3, 8],              
+              [2, 7],
+              [1, 6],
+            ],
+            [
+              [3, 6],
+              [2, 7],
+              [1, 8]
+            ]            
+          ]
         ])
       end
     end
 
-    context 'when xmas is up left' do
-      let(:x) { 6 }
-      let(:y) { 5 }
+    # left
+    # S
+    #  A
+    #   M
 
-      it 'finds xmas and returns the coords' do
-        expect(subject.get_xmas_coords_from(y, x)).to include([
-          [5, 6],
-          [4, 5],
-          [3, 4],
-          [2, 3]
-        ])
-      end
-    end
-
-    context 'when xmas is up' do
-      let(:x) { 6 }
-      let(:y) { 4 }
-
-      it 'finds xmas and returns the coords' do
-        expect(subject.get_xmas_coords_from(y, x)).to include([
-          [4, 6],
-          [3, 6],
-          [2, 6],
-          [1, 6]
-        ])
-      end
-    end
-
-    context 'when xmas is down' do
-      let(:x) { 9 }
-      let(:y) { 3 }
-
-      it 'finds xmas and returns the coords' do
-        expect(subject.get_xmas_coords_from(y, x)).to include([
-          [3, 9],
-          [4, 9],
-          [5, 9],
-          [6, 9]
-        ])
-      end
-    end
-
-    context 'when xmas is up right' do
-      let(:x) { 0 }
-      let(:y) { 5 }
-
-      it 'finds xmas and returns the coords' do
-        expect(subject.get_xmas_coords_from(y, x)).to include([
-          [5, 0],
-          [4, 1],
-          [3, 2],
-          [2, 3]
-        ])
-      end
-    end
-
-    context 'when xmas is down right' do
+    # right
+    #   M
+    #  A
+    # S
+    context 'where left mas is backwards and right mas is backwards' do
       let(:x) { 4 }
-      let(:y) { 0 }
+      let(:y) { 3 }
 
-      it 'finds xmas and returns the coords' do
-        expect(subject.get_xmas_coords_from(y, x)).to include([
-          [0, 4],
-          [1, 5],
-          [2, 6],
-          [3, 7]
+      it 'returns the left mas coords then the right mas coords' do
+        expect(subject.get_xmas_coords_from(y, x)).to match_array([
+          [
+            [
+              [4, 5],
+              [3, 4],
+              [2, 3]
+            ],
+            [
+              [2, 5],
+              [3, 4],
+              [4, 3]
+            ]            
+          ]
         ])
       end
     end
 
-    context 'when xmas is down left' do
-      let(:x) { 9 }
-      let(:y) { 3 }
+    # forwards on left means
+      # M
+      #  A
+      #   S
 
-      it 'finds xmas and returns the coords' do
-        expect(subject.get_xmas_coords_from(y, x)).to include([
-          [3, 9],
-          [4, 8],
-          [5, 7],
-          [6, 6]
+    # right
+    #   M
+    #  A
+    # S
+    context 'where left mas is forwards and right mas is backward' do
+      let(:x) { 6 }
+      let(:y) { 2 }
+
+      it 'returns the left mas coords then the right mas coords' do
+        expect(subject.get_xmas_coords_from(y, x)).to match_array([
+          [
+            [
+              [1, 5],
+              [2, 6],
+              [3, 7]
+            ],
+            [
+              [1, 7],
+              [2, 6],
+              [3, 5]
+            ]            
+          ]
         ])
       end
     end
